@@ -5,7 +5,7 @@ import re
 class Function:
     def __init__(self, raw_math_function: str):
         raw_math_function = raw_math_function.strip()
-        regex_pattern = r"(?P<name>[a-zA-Z_]\w*)\((?P<variables>[a-zA-Z_]\w*(?:,[a-zA-Z_]\w*)*)\)\s*=\s*(?P<expression>.+)"
+        regex_pattern = r"(?P<name>[a-zA-Z_]\w*)\((?P<variables>[a-zA-Z_]\w*(?:,\s?[a-zA-Z_]\w*)*)\)\s*=\s*(?P<expression>.+)"
 
         match = re.fullmatch(regex_pattern, raw_math_function)
 
