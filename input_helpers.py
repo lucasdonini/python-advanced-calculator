@@ -22,3 +22,9 @@ def normalize_unicode_powers(expression: str) -> str:
 
     regex = r"[⁰¹²³⁴⁵⁶⁷⁸⁹]+"
     return re.sub(regex, transformation, expression)
+
+
+def read_expression(message: str = "Input the expression: ") -> str:
+    entry = input(message).strip()
+    normalized = normalize_unicode_powers(entry)
+    return normalized
