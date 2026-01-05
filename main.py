@@ -1,9 +1,7 @@
-from math_func import Function
 from math_function_parser import parse_symbolic, evaluate_exact
-from input_helpers import normalize
-import math
+from io_utils import normalize, interaction, pause
+from function_calculator import main as use_function
 import re
-import os
 
 
 def evaluate_expression() -> None:
@@ -19,39 +17,32 @@ def show_menu() -> None:
     print(
         """
 === Advanced Calculator ===
-    [0] -> Exit
-    [1] -> Evaluate expression
-    [2] -> Use function
+[0] -> Exit
+[1] -> Evaluate expression
+[2] -> Use Funciton Calculator
 """
     )
 
 
 def process(action: str) -> bool:
     match action:
+        case "":
+            pass
         case "0":
             return True
         case "1":
             evaluate_expression()
+            pause()
         case "2":
-            print("Not implemented")
+            use_function()
         case _:
             print("Action not supported")
+            pause()
     return False
 
 
-def clear_screen() -> None:
-    os.system("cls" if os.name == "nt" else "clear")
-
-
 def main() -> None:
-    exit = False
-    while not exit:
-        clear_screen()
-        show_menu()
-        action = input("Select the desired action: ").strip()
-        exit = process(action)
-        if not exit:
-            input("Press [Enter] to continue...")
+    interaction(show_menu, process)
 
 
 if __name__ == "__main__":
