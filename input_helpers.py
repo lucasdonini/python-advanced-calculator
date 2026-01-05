@@ -17,7 +17,7 @@ def normalize_unicode_powers(expression: str) -> str:
     }
 
     transformation: Callable[[re.Match], str] = lambda match: "^" + "".join(
-        match.group()
+        EXPONENTS[c] for c in match.group()
     )
 
     regex = r"[⁰¹²³⁴⁵⁶⁷⁸⁹]+"
