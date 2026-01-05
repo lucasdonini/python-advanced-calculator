@@ -1,3 +1,4 @@
 mypy==1.10.0
 black
 sympy
+pytest
