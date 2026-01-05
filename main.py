@@ -1,23 +1,16 @@
 from math_func import Function
-from math_function_parser import parse
+from math_function_parser import parse_symbolic, evaluate_exact
 from input_helpers import normalize
 import math
-
-
-def normalize_result(num: float) -> float | str:
-    if math.isnan(num):
-        return "undefined"
-    if num == math.inf:
-        return "∞"
-    if num == -math.inf:
-        return "-∞"
+import re
 
 
 def evaluate_expression() -> None:
     expression = input("Enter the expression: ")
     normalized = normalize(expression)
-    function = parse(normalized, variables=[])
-    result = normalize_result(function())
+    is_simple = re.search(r"[a-zA-Z]", expression) is None
+    solver = evaluate_exact if is_simple else parse_symbolic
+    result = solver(normalized)
     print(f"{expression} = {result}")
 
 

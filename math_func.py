@@ -1,4 +1,4 @@
-from math_function_parser import parse
+from math_function_parser import parse_symbolic
 import re
 
 
@@ -16,8 +16,8 @@ class Function:
         self.name = function_parts["name"].strip()
         self.variables = [v.strip() for v in function_parts["variables"].split(",")]
         self.expression = function_parts["expression"].strip()
+        self.expression = parse_symbolic(self.expression, self.variables)
         self._raw = raw_math_function
-        self._callable = parse(self.expression, self.variables)
 
     def __call__(self, *args):
         n_args = len(self.variables)
@@ -25,7 +25,10 @@ class Function:
             raise TypeError(
                 f"The function {self.name} expects {n_args}, but got {len(args)}"
             )
-        return self._callable(*args)
+
+        values = {variable: value for variable, value in zip(self.variables, args)}
+        result = self.expression.subs(values)
+        return result
 
     def __str__(self):
         return self._raw
