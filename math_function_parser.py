@@ -8,6 +8,7 @@ def parse(expression: str, variables: List[str]) -> Callable[..., float]:
     transformations = parser.standard_transformations + (
         parser.implicit_multiplication_application,
         parser.convert_xor,
+        parser.function_exponentiation,
     )
 
     parsed = parser.parse_expr(expression, transformations=transformations)
