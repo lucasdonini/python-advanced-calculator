@@ -1,0 +1,13 @@
+#! /bin/bash
+
+echo 'Formatting code...'
+mapfile -t files < <(git diff --cached --name-only -- '*.py')
+
+if (( ${#files[@]} > 0 )); then
+    black -q ${files[@]}
+    git add ${files[@]}
+fi
+
+tput setaf 2
+echo "Code formatted successfully"
+tput sgr0
