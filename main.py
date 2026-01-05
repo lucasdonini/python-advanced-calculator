@@ -1,13 +1,24 @@
 from math_func import Function
 from math_function_parser import parse
 from input_helpers import normalize
+import math
+
+
+def normalize_result(num: float) -> float | str:
+    if math.isnan(num):
+        return "undefined"
+    if num == math.inf:
+        return "∞"
+    if num == -math.inf:
+        return "-∞"
 
 
 def evaluate_expression() -> None:
     expression = input("Enter the expression: ")
     normalized = normalize(expression)
     function = parse(normalized, variables=[])
-    print(f"{expression} = {function()}")
+    result = normalize_result(function())
+    print(f"{expression} = {result}")
 
 
 def show_menu() -> None:
