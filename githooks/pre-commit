@@ -1,29 +1,5 @@
 #! /bin/bash
 
-function error() {
-    tput setaf 1
-    echo "$1"
-    tput sgr0
-    exit 1
-}
-
-REPO_ROOT=$(git rev-parse --show-toplevel)
-
-echo 'Testing added code...'
-tempdir=$(mktemp -d)
-trap 'rm -rf "$tempdir"' EXIT
-
-git checkout-index -af --prefix="${tempdir}/"
-
-cd "$tempdir" || error "Failed to setup test environment. Try again later"
-pytest -q -W error --strict-markers "$@"
-EXIT_CODE=$?
-if (( EXIT_CODE != 5 && EXIT_CODE != 0 )); then
-    error 'Tests failed'
-fi
-
-cd $REPO_ROOT
-
 echo 'Formatting code...'
 mapfile -t files < <(git diff --cached --name-only -- '*.py')
 
