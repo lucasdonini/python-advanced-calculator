@@ -1,11 +1,12 @@
 from math_func import Function
 from math_function_parser import parse
-from input_helpers import read_expression
+from input_helpers import normalize
 
 
 def evaluate_expression() -> None:
-    expression = read_expression()
-    function = parse(expression, variables=[])
+    expression = input("Enter the expression: ")
+    normalized = normalize(expression)
+    function = parse(normalized, variables=[])
     print(f"{expression} = {function()}")
 
 
@@ -22,14 +23,14 @@ def show_menu() -> None:
 def process(action: str) -> bool:
     match action:
         case "0":
-            return False
+            return True
         case "1":
             evaluate_expression()
         case "2":
             print("Not implemented")
         case _:
             print("Action not supported")
-    return True
+    return False
 
 
 def main() -> None:

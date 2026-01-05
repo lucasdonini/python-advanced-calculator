@@ -1,0 +1,10 @@
+#! /bin/bash
+
+HOME='/home/kluska/codes/projects/advanced-calculator'
+
+if [ -z "$VIRTUAL_ENV" ]; then
+    source "${HOME}/.venv/bin/activate"
+    trap 'deactivate' EXIT
+fi
+
+python -m main
